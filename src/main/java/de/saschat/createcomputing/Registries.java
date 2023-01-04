@@ -1,7 +1,7 @@
 package de.saschat.createcomputing;
 
 import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBlockItem;
-import com.simibubi.create.repack.registrate.util.nullness.NonNullBiFunction;
+import com.tterrag.registrate.util.nullness.NonNullBiFunction;
 import de.saschat.createcomputing.blocks.ComputerizedDisplaySourceBlock;
 import de.saschat.createcomputing.blocks.ComputerizedDisplayTargetBlock;
 import de.saschat.createcomputing.blocks.ComputerizedRedstoneLinkBlock;
@@ -161,30 +161,8 @@ public class Registries {
         public static void modData(final GatherDataEvent event) {
         }
     }
-    /*@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-    public static class ForgeEvents {
-        @SubscribeEvent
-        public static void modCommands(final RegisterCommandsEvent event) {
-            System.out.println("REGISTER COMMANDS");
-            event.getDispatcher().register(
-                Commands.literal("redstone_link").executes(context -> {
-                    Map<Couple<RedstoneLinkNetworkHandler.Frequency>, Set<IRedstoneLinkable>> coupleSetMap = Create.REDSTONE_LINK_NETWORK_HANDLER.networksIn(context.getSource().getLevel());
-                    coupleSetMap.forEach((frequencies, iRedstoneLinkables) -> {
-                        System.out.println("Frequency: " + frequencies.get(true).getStack().getItem().getRegistryName().toString() + ", " + frequencies.get(false).getStack().getItem().getRegistryName().toString());
-                        for (IRedstoneLinkable iRedstoneLinkable : iRedstoneLinkables) {
-                            System.out.println("\tAt " + iRedstoneLinkable.getLocation().toString() + ", listening: " + iRedstoneLinkable.isListening() + ", alive: " + iRedstoneLinkable.isAlive() + ", strength: " + iRedstoneLinkable.getTransmittedStrength());
-                        }
-                    });
-                    return 0;
-                })
-            );
-        }
-    }*/
-
-
-
+	
     // Real loading
-
     public static void init(IEventBus modEventBus) {
         CreateComputingMod.LOGGER.info("Registering all registries.");
         BLOCK_REGISTRY.register(modEventBus);
@@ -192,6 +170,4 @@ public class Registries {
         TILE_REGISTRY.register(modEventBus);
         CreateComputingMod.LOGGER.info("Registered all registries.");
     } // For loading.
-
-
 }
