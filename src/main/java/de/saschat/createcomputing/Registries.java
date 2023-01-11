@@ -129,8 +129,8 @@ public class Registries {
     public static RegistryObject<Item> TRAIN_NETWORK_OBSERVER_ITEM = registerBlockItem(
         "train_network_observer",
         TRAIN_NETWORK_OBSERVER,
-        new Item.Properties().tab(TAB),
-        TrackTargetingBlockItem.ofType(TrainNetworkObserverTile.NETWORK_OBSERVER)
+        new Item.Properties().tab(TAB)
+		,TrackTargetingBlockItem.ofType(TrainNetworkObserverTile.NETWORK_OBSERVER)
     );
     public static RegistryObject<BlockEntityType<TrainNetworkObserverTile>> TRAIN_NETWORK_OBSERVER_TILE = registerTile(
         "train_network_observer",

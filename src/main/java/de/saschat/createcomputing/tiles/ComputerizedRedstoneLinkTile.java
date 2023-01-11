@@ -79,8 +79,8 @@ public class ComputerizedRedstoneLinkTile extends SmartTileEntity {
         pairs.remove(pair.index, pair);
         pair.sendSignal = 0;
         pair.transmit.notifySignalChange();
-        pair.transmit.remove();
-        pair.receive.remove();
+        pair.transmit.unload();
+        pair.receive.unload();
     }
 
 
