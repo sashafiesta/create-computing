@@ -1,7 +1,7 @@
 package de.saschat.createcomputing.peripherals;
 
 import com.google.gson.Gson;
-import com.simibubi.create.content.logistics.block.display.DisplayLinkContext;
+import com.simibubi.create.content.redstone.displayLink.DisplayLinkContext;
 import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.lua.LuaException;
@@ -90,7 +90,7 @@ public class ComputerizedDisplayTargetPeripheral implements IDynamicPeripheral {
         }
         computers.forEach(a -> {
             a.queueEvent("display_link_data",
-                displayLinkContext.te().activeSource.id.toString(),
+                displayLinkContext.blockEntity().activeSource.id.toString(),
                 displayLinkContext.getSourcePos().getX(),
                 displayLinkContext.getSourcePos().getY(),
                 displayLinkContext.getSourcePos().getZ(),

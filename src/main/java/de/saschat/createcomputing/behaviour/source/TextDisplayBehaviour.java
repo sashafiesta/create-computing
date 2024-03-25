@@ -1,9 +1,8 @@
 package de.saschat.createcomputing.behaviour.source;
 
-import com.simibubi.create.content.logistics.block.display.DisplayLinkContext;
-import com.simibubi.create.content.logistics.block.display.source.DisplaySource;
-import com.simibubi.create.content.logistics.block.display.target.DisplayTargetStats;
-import com.simibubi.create.content.logistics.trains.management.display.FlapDisplayTileEntity;
+import com.simibubi.create.content.redstone.displayLink.DisplayLinkContext;
+import com.simibubi.create.content.redstone.displayLink.source.DisplaySource;
+import com.simibubi.create.content.redstone.displayLink.target.DisplayTargetStats;
 import de.saschat.createcomputing.tiles.ComputerizedDisplaySourceTile;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
@@ -17,7 +16,7 @@ public class TextDisplayBehaviour extends DisplaySource {
         /*
             Maybe some events in the future?
          */
-        return ((ComputerizedDisplaySourceTile) displayLinkContext.getSourceTE()).getFromPos(displayLinkContext.te().getBlockPos()).toDisplay;
+        return ((ComputerizedDisplaySourceTile) displayLinkContext.getSourceBlockEntity()).getFromPos(displayLinkContext.blockEntity().getBlockPos()).toDisplay;
     }
 
     @Override

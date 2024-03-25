@@ -16,7 +16,7 @@ plugins {
 apply plugin: 'org.spongepowered.mixin'
 
 group = 'de.saschat'
-version = '1.0.0-pre3'
+version = '1.1.0'
 
 java {
     archivesBaseName = 'createcomputing'
@@ -160,13 +160,15 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.10'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.2.4'
 	jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: '[MC1.18.2-1.1.3,)') {
         jarJar.pin(it, "MC1.18.2-1.1.3")
     }
-	implementation fg.deobf("com.tterrag.registrate:Registrate:MC1.18.2-1.1.3")
-    implementation fg.deobf("curse.maven:create-328085:4174329")
-    implementation fg.deobf("curse.maven:flywheel-486392:4174748")
+
+    implementation fg.deobf("com.simibubi.create:create-${create_minecraft_version}:${create_version}:slim") { transitive = false }
+    implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
+    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+
     implementation fg.deobf("curse.maven:cc-tweaked-282001:3709268")
     implementation fg.deobf("curse.maven:jade-324717:3865918")
     // Real mod deobf dependency examples - these get remapped to your current mappings

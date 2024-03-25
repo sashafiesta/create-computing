@@ -1,6 +1,6 @@
 package de.saschat.createcomputing.blocks;
 
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.foundation.block.IBE;
 import de.saschat.createcomputing.Registries;
 import de.saschat.createcomputing.tiles.ComputerizedRedstoneLinkTile;
 import net.minecraft.core.BlockPos;
@@ -13,18 +13,18 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class ComputerizedRedstoneLinkBlock extends Block implements ITE<ComputerizedRedstoneLinkTile> {
+public class ComputerizedRedstoneLinkBlock extends Block implements IBE<ComputerizedRedstoneLinkTile> {
     public ComputerizedRedstoneLinkBlock() {
         super(BlockBehaviour.Properties.of(Material.WOOD).destroyTime(1));
     }
 
     @Override
-    public Class<ComputerizedRedstoneLinkTile> getTileEntityClass() {
+    public Class<ComputerizedRedstoneLinkTile> getBlockEntityClass() {
         return ComputerizedRedstoneLinkTile.class;
     }
 
     @Override
-    public BlockEntityType<? extends ComputerizedRedstoneLinkTile> getTileEntityType() {
+    public BlockEntityType<? extends ComputerizedRedstoneLinkTile> getBlockEntityType() {
         return Registries.COMPUTERIZED_REDSTONE_LINK_TILE.get();
     }
 
