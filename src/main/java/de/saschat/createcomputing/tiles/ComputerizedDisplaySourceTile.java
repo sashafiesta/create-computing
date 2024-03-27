@@ -1,7 +1,8 @@
 package de.saschat.createcomputing.tiles;
 
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.logistics.block.display.DisplayLinkTileEntity;
+import com.simibubi.create.content.redstone.displayLink.DisplayLinkBlock;
+import com.simibubi.create.content.redstone.displayLink.DisplayLinkBlockEntity;
 import dan200.computercraft.shared.Capabilities;
 import de.saschat.createcomputing.Registries;
 import de.saschat.createcomputing.blocks.ComputerizedDisplaySourceBlock;
@@ -41,10 +42,10 @@ public class ComputerizedDisplaySourceTile extends BlockEntity {
     }
 
     public static class DisplayData {
-        public DisplayLinkTileEntity tileEntity;
+        public DisplayLinkBlockEntity blockEntity;
         public List<MutableComponent> toDisplay = new ArrayList<>();
-        public DisplayData(DisplayLinkTileEntity te) {
-            this.tileEntity = te;
+        public DisplayData(DisplayLinkBlockEntity be) {
+            this.blockEntity = be;
         }
     }
 
@@ -72,7 +73,7 @@ public class ComputerizedDisplaySourceTile extends BlockEntity {
             BlockPos location = pos.relative(dir);
             BlockState blockState = level.getBlockState(location);
             if (blockState.is(AllBlocks.DISPLAY_LINK.get())) {
-                display_links.put(dir, new DisplayData((DisplayLinkTileEntity) level.getBlockEntity(location)));
+                display_links.put(dir, new DisplayData((DisplayLinkBlockEntity) level.getBlockEntity(location)));
                 addLink(dir);
             } else {
                 if (display_links.containsKey(dir)) {

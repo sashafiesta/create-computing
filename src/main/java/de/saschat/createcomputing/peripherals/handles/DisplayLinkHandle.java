@@ -1,9 +1,9 @@
 package de.saschat.createcomputing.peripherals.handles;
 
 import com.google.gson.Gson;
-import com.simibubi.create.content.logistics.block.display.DisplayLinkTileEntity;
-import com.simibubi.create.content.logistics.block.display.target.DisplayTarget;
-import com.simibubi.create.content.logistics.trains.management.display.FlapDisplayTileEntity;
+import com.simibubi.create.content.redstone.displayLink.DisplayLinkBlockEntity;
+import com.simibubi.create.content.redstone.displayLink.target.DisplayTarget;
+import com.simibubi.create.content.trains.display.FlapDisplayBlockEntity;
 import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
@@ -58,7 +58,7 @@ public class DisplayLinkHandle {
 
     public DisplayTarget getTarget() throws LuaException {
         ComputerizedDisplaySourceTile.DisplayData data = getData();
-        return data.tileEntity.activeTarget;
+        return data.blockEntity.activeTarget;
     }
 
     @LuaFunction
@@ -66,7 +66,7 @@ public class DisplayLinkHandle {
         checkOpen();
         ComputerizedDisplaySourceTile.DisplayData data = getData();
 
-        DisplayLinkTileEntity te = data.tileEntity;
+        DisplayLinkBlockEntity te = data.blockEntity;
 
         if(getTarget() != null)
             return new Object[]{getTarget().id.toString()};
@@ -129,7 +129,7 @@ public class DisplayLinkHandle {
             switch (getTarget().id.toString()) {
                 // @todo more target sizes
                 case "create:display_board_target": {
-                    FlapDisplayTileEntity d = (FlapDisplayTileEntity) data.tileEntity.getLevel().getBlockEntity(data.tileEntity.getTargetPosition());
+                    FlapDisplayBlockEntity d = (FlapDisplayBlockEntity) data.blockEntity.getLevel().getBlockEntity(data.blockEntity.getTargetPosition());
                     d = d.getController();
                     return new Object[]{d.getMaxCharCount()};
                 }
@@ -145,7 +145,7 @@ public class DisplayLinkHandle {
             switch (getTarget().id.toString()) {
                 // @todo more target sizes
                 case "create:display_board_target": {
-                    FlapDisplayTileEntity d = (FlapDisplayTileEntity) data.tileEntity.getLevel().getBlockEntity(data.tileEntity.getTargetPosition());
+                    FlapDisplayBlockEntity d = (FlapDisplayBlockEntity) data.blockEntity.getLevel().getBlockEntity(data.blockEntity.getTargetPosition());
                     d = d.getController();
                     return new Object[]{d.getLines().size()};
                 }

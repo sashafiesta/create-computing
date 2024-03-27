@@ -1,6 +1,6 @@
 package de.saschat.createcomputing.blocks;
 
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.foundation.block.IBE;
 import de.saschat.createcomputing.Registries;
 import de.saschat.createcomputing.tiles.TrainNetworkObserverTile;
 import net.minecraft.core.BlockPos;
@@ -17,18 +17,18 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.stream.Stream;
 
-public class TrainNetworkObserverBlock extends Block implements ITE<TrainNetworkObserverTile> {
+public class TrainNetworkObserverBlock extends Block implements IBE<TrainNetworkObserverTile> {
     public TrainNetworkObserverBlock() {
         super(Properties.of(Material.WOOD).destroyTime(1));
     }
 
     @Override
-    public Class<TrainNetworkObserverTile> getTileEntityClass() {
+    public Class<TrainNetworkObserverTile> getBlockEntityClass() {
         return TrainNetworkObserverTile.class;
     }
 
     @Override
-    public BlockEntityType<? extends TrainNetworkObserverTile> getTileEntityType() {
+    public BlockEntityType<? extends TrainNetworkObserverTile> getBlockEntityType() {
         return Registries.TRAIN_NETWORK_OBSERVER_TILE.get();
     }
 

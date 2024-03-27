@@ -1,6 +1,6 @@
 package de.saschat.createcomputing.tiles;
 
-import com.simibubi.create.content.logistics.block.display.DisplayLinkContext;
+import com.simibubi.create.content.redstone.displayLink.DisplayLinkContext;
 import dan200.computercraft.shared.Capabilities;
 import de.saschat.createcomputing.Registries;
 import de.saschat.createcomputing.blocks.ComputerizedDisplaySourceBlock;

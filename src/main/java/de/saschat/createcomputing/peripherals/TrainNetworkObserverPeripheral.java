@@ -3,22 +3,23 @@ package de.saschat.createcomputing.peripherals;
 import com.google.gson.Gson;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.logistics.item.filter.AttributeFilterContainer;
-import com.simibubi.create.content.logistics.item.filter.FilterItem;
-import com.simibubi.create.content.logistics.trains.BezierConnection;
-import com.simibubi.create.content.logistics.trains.GraphLocation;
-import com.simibubi.create.content.logistics.trains.TrackNodeLocation;
-import com.simibubi.create.content.logistics.trains.entity.Carriage;
-import com.simibubi.create.content.logistics.trains.entity.CarriageContraptionEntity;
-import com.simibubi.create.content.logistics.trains.entity.Train;
-import com.simibubi.create.content.logistics.trains.management.display.GlobalTrainDisplayData;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.observer.TrackObserver;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalBoundary;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.signal.SignalTileEntity;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.station.GlobalStation;
-import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleEntry;
-import com.simibubi.create.content.logistics.trains.management.schedule.condition.ScheduleWaitCondition;
+
+import com.simibubi.create.content.logistics.filter.AttributeFilterMenu;
+import com.simibubi.create.content.logistics.filter.FilterItem;
+import com.simibubi.create.content.trains.track.BezierConnection;
+import com.simibubi.create.content.trains.graph.TrackGraphLocation;
+import com.simibubi.create.content.trains.graph.TrackNodeLocation;
+import com.simibubi.create.content.trains.entity.Carriage;
+import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
+import com.simibubi.create.content.trains.entity.Train;
+import com.simibubi.create.content.trains.display.GlobalTrainDisplayData;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.observer.TrackObserver;
+import com.simibubi.create.content.trains.signal.SignalBoundary;
+import com.simibubi.create.content.trains.signal.SignalBlockEntity;
+import com.simibubi.create.content.trains.station.GlobalStation;
+import com.simibubi.create.content.trains.schedule.ScheduleEntry;
+import com.simibubi.create.content.trains.schedule.condition.ScheduleWaitCondition;
 import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import de.saschat.createcomputing.CreateComputingMod;
@@ -43,7 +44,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
 
     public List<Train> getTrains() {
         List<Train> trainList = new LinkedList<>();
-        GraphLocation graphLocation = parent.getGraphLocation();
+        TrackGraphLocation graphLocation = parent.getGraphLocation();
         for (Train train : Create.RAILWAYS.trains.values()) {
             if (train.graph.id.equals(graphLocation.graph.id))
                 trainList.add(train);
@@ -172,7 +173,8 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             if (first.isEmpty())
                 return MethodResult.of(null);
             GlobalStation station = first.get();
-            return MethodResult.of(station.tilePos.getX(), station.tilePos.getY(), station.tilePos.getZ());
+            BlockPos pos = station.getBlockEntityPos();
+            return MethodResult.of(pos.getX(), pos.getY(), pos.getZ());
         });
         addMethod("getStopExpectedTrain", (iComputerAccess, iLuaContext, iArguments) -> {
             String b = iArguments.getString(0);
@@ -233,7 +235,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             if (first.isEmpty())
                 return MethodResult.of(null);
             SignalBoundary signal = first.get();
-            SignalTileEntity.SignalState stateFor = signal.cachedStates.get(toPos);
+            SignalBlockEntity.SignalState stateFor = signal.cachedStates.get(toPos);
             return switch (stateFor) {
                 case RED -> MethodResult.of(0);
                 case YELLOW -> MethodResult.of(1);
@@ -252,7 +254,8 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             if (first.isEmpty())
                 return MethodResult.of(null);
             TrackObserver obs = first.get();
-            return MethodResult.of(obs.tilePos.getX(), obs.tilePos.getY(), obs.tilePos.getZ());
+            BlockPos pos = obs.getBlockEntityPos();
+            return MethodResult.of(pos.getX(), pos.getY(), pos.getZ());
         });
         addMethod("getObserverFilter", ((iComputerAccess, iLuaContext, iArguments) -> {
             String b = iArguments.getString(0);
@@ -260,7 +263,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             if (first.isEmpty())
                 return MethodResult.of(null);
             TrackObserver obs = first.get();
-            return MethodResult.of(blowFilter(obs.getFilter()));
+            return MethodResult.of(blowFilter(obs.getFilter().item()));
         }));
         // GRAPH
         addMethod("getGraph", ((iComputerAccess, iLuaContext, iArguments) -> {
@@ -318,7 +321,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
         }
         if (filter.is(AllItems.ATTRIBUTE_FILTER.get())) {
             ret.put("type", "attribute");
-            AttributeFilterContainer.WhitelistMode whitelistMode = AttributeFilterContainer.WhitelistMode.values()[filter.getTag().getInt("WhitelistMode")];
+            AttributeFilterMenu.WhitelistMode whitelistMode = AttributeFilterMenu.WhitelistMode.values()[filter.getTag().getInt("WhitelistMode")];
             ret.put("allowmode", whitelistMode.toString());
             ListTag tag = filter.getTag().getList("MatchedAttributes", Tag.TAG_COMPOUND);
             int idx = 1;

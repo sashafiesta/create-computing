@@ -37,14 +37,13 @@ public class RedstoneHandle {
         return linkPair;
     }
 
-    @LuaFunction(mainThread = true)
+    @LuaFunction(mainThread = false)
     public final void setSignal(IArguments arguments) throws LuaException {
         isOpen();
         int value = arguments.getInt(0);
-        System.out.println("sx: " + value);
         getHandle().provideSignal(value);
     }
-    @LuaFunction(mainThread = true)
+    @LuaFunction(mainThread = false)
     public final int getSignal(IArguments arguments) throws LuaException {
         isOpen();
         return getHandle().retrieveSignal();
@@ -53,7 +52,7 @@ public class RedstoneHandle {
     public final String getId() throws LuaException {
         return this.handle.toString();
     }
-    @LuaFunction(mainThread = true)
+    @LuaFunction(mainThread = false)
     public final void setItems(IArguments arguments) throws LuaException {
         isOpen();
         String _item1 = arguments.getString(0);
@@ -70,7 +69,7 @@ public class RedstoneHandle {
             throw new LuaException(_item2 + " is banned from the Computerized Redstone Link! This can be changed in the config.");
         getHandle().setFrequency(new Item[] {item1, item2});
     }
-    @LuaFunction(mainThread = true)
+    @LuaFunction(mainThread = false)
     public final String[] getItems(IArguments arguments) throws LuaException {
         return Arrays.stream(getHandle().items).map(a -> a.getRegistryName().toString()).collect(Collectors.toList()).toArray(new String[0]);
     }

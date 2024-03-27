@@ -1,10 +1,10 @@
 package de.saschat.createcomputing.tiles;
 
-import com.simibubi.create.content.logistics.block.redstone.RedstoneLinkFrequencySlot;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
-import com.simibubi.create.foundation.tileEntity.behaviour.ValueBoxTransform;
-import com.simibubi.create.foundation.tileEntity.behaviour.linked.LinkBehaviour;
+import com.simibubi.create.content.redstone.link.RedstoneLinkFrequencySlot;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
+import com.simibubi.create.content.redstone.link.LinkBehaviour;
 import dan200.computercraft.shared.Capabilities;
 import de.saschat.createcomputing.Registries;
 import de.saschat.createcomputing.Utils;
@@ -27,7 +27,7 @@ import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ComputerizedRedstoneLinkTile extends SmartTileEntity {
+public class ComputerizedRedstoneLinkTile extends SmartBlockEntity {
     public ConcurrentHashMap<UUID, LinkPair> pairs = new ConcurrentHashMap<>();
     public List<LinkPair> deferred = new LinkedList<>();
     public Queue<Runnable> tasks = new ArrayBlockingQueue<>(32);
@@ -115,7 +115,7 @@ public class ComputerizedRedstoneLinkTile extends SmartTileEntity {
         }
     */
     @Override
-    public void addBehavioursDeferred(List<TileEntityBehaviour> behaviours) {
+    public void addBehavioursDeferred(List<BlockEntityBehaviour> behaviours) {
         super.addBehavioursDeferred(behaviours);
         for (LinkPair linkPair : deferred) {
             pairs.put(linkPair.index, linkPair);
@@ -133,7 +133,7 @@ public class ComputerizedRedstoneLinkTile extends SmartTileEntity {
     }
 
     @Override
-    public void addBehaviours(List<TileEntityBehaviour> list) {
+    public void addBehaviours(List<BlockEntityBehaviour> list) {
     }
 
     private static boolean firstRun = true;
@@ -154,6 +154,7 @@ public class ComputerizedRedstoneLinkTile extends SmartTileEntity {
 
         public boolean registered = false;
 
+        public boolean dirty = false;
         public int sendSignal = 0;
         public int recvSignal = 0;
         ComputerizedRedstoneLinkTile parent;
@@ -217,13 +218,17 @@ public class ComputerizedRedstoneLinkTile extends SmartTileEntity {
         private void dirty() {
             if (parent.getLevel().isClientSide())
                 return;
+            if (dirty) return;
+            dirty = true;
             parent.tasks.add(this::_dirty);
             parent.setChanged();
         }
 
         private void _dirty() {
+            dirty = false;
             transmit.notifySignalChange();
             receive.notifySignalChange();
+            parent.setChanged();
         }
 
         private void setSignal(int i) {

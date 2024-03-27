@@ -1,10 +1,10 @@
 package de.saschat.createcomputing.tiles.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.content.logistics.trains.ITrackBlock;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour.RenderedTrackOverlayType;
-import com.simibubi.create.foundation.tileEntity.renderer.SmartTileEntityRenderer;
+import com.simibubi.create.content.trains.track.ITrackBlock;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour.RenderedTrackOverlayType;
+import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import de.saschat.createcomputing.behaviour.tile.TrainNetworkObserver;
 import de.saschat.createcomputing.tiles.TrainNetworkObserverTile;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TrainNetworkObserverRenderer extends SmartTileEntityRenderer<TrainNetworkObserverTile> {
+public class TrainNetworkObserverRenderer extends SmartBlockEntityRenderer<TrainNetworkObserverTile> {
 
     public TrainNetworkObserverRenderer(BlockEntityRendererProvider.Context context) {
         super(context);

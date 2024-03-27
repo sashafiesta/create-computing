@@ -1,14 +1,14 @@
 package de.saschat.createcomputing.tiles;
 
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.components.structureMovement.ITransformableTE;
-import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
-import com.simibubi.create.content.logistics.trains.GraphLocation;
-import com.simibubi.create.content.logistics.trains.TrackGraphHelper;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.EdgePointType;
-import com.simibubi.create.content.logistics.trains.management.edgePoint.TrackTargetingBehaviour;
-import com.simibubi.create.foundation.tileEntity.SmartTileEntity;
-import com.simibubi.create.foundation.tileEntity.TileEntityBehaviour;
+import com.simibubi.create.content.contraptions.ITransformableBlockEntity;
+import com.simibubi.create.content.contraptions.StructureTransform;
+import com.simibubi.create.content.trains.graph.TrackGraphLocation;
+import com.simibubi.create.content.trains.graph.TrackGraphHelper;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import dan200.computercraft.shared.Capabilities;
 import de.saschat.createcomputing.CreateComputingMod;
 import de.saschat.createcomputing.Registries;
@@ -26,15 +26,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class TrainNetworkObserverTile extends SmartTileEntity implements ITransformableTE {
+public class TrainNetworkObserverTile extends SmartBlockEntity implements ITransformableBlockEntity {
     public TrackTargetingBehaviour<TrainNetworkObserver> edgePoint;
     public static final EdgePointType<TrainNetworkObserver> NETWORK_OBSERVER = EdgePointType.register(new ResourceLocation(
         CreateComputingMod.MOD_ID,
         "network_observer"
     ), TrainNetworkObserver::new);
 
-    public GraphLocation getGraphLocation() {
-        GraphLocation l = null;
+    public TrackGraphLocation getGraphLocation() {
+        TrackGraphLocation l = null;
         if (edgePoint.getTargetBezier() != null) {
             l = TrackGraphHelper.getBezierGraphLocationAt(getLevel(), edgePoint.getGlobalPosition(), Direction.AxisDirection.POSITIVE, edgePoint.getTargetBezier());
         } else {
@@ -71,7 +71,7 @@ public class TrainNetworkObserverTile extends SmartTileEntity implements ITransf
     }
 
     @Override
-    public void addBehaviours(List<TileEntityBehaviour> behaviours) {
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, NETWORK_OBSERVER));
     }
 
