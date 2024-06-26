@@ -4,13 +4,13 @@ import com.simibubi.create.content.redstone.displayLink.DisplayLinkContext;
 import com.simibubi.create.content.redstone.displayLink.source.DisplaySource;
 import com.simibubi.create.content.redstone.displayLink.target.DisplayTargetStats;
 import de.saschat.createcomputing.tiles.ComputerizedDisplaySourceTile;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
 
 import java.util.List;
 
 public class TextDisplayBehaviour extends DisplaySource {
-    public static MutableComponent NIL_TEXT = new TextComponent("");
+    public static MutableComponent NIL_TEXT = Component.literal("");
     @Override
     public List<MutableComponent> provideText(DisplayLinkContext displayLinkContext, DisplayTargetStats displayTargetStats) {
         /*

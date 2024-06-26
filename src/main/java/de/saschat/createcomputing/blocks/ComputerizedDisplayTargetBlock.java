@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -26,7 +26,7 @@ public class ComputerizedDisplayTargetBlock extends Block implements EntityBlock
     public static DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public ComputerizedDisplayTargetBlock() {
-        super(Properties.of(Material.WOOD).destroyTime(1));
+        super(Properties.of().mapColor(MapColor.WOOD).destroyTime(1));
         registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH));
     }
 

@@ -5,6 +5,7 @@ import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.content.redstone.link.LinkBehaviour;
+import com.simibubi.create.foundation.utility.RegisteredObjects;
 import dan200.computercraft.shared.Capabilities;
 import de.saschat.createcomputing.Registries;
 import de.saschat.createcomputing.Utils;
@@ -126,7 +127,7 @@ public class ComputerizedRedstoneLinkTile extends SmartBlockEntity {
 
     public static boolean checkItem(Item stack) {
         for (String loc : CreateComputingConfigServer.get().BANNED_LINK_ITEMS.get()) {
-            if (loc.equals(stack.getRegistryName().toString()))
+            if (loc.equals(RegisteredObjects.getKeyOrThrow(stack.asItem()).toString()))
                 return false;
         }
         return true;

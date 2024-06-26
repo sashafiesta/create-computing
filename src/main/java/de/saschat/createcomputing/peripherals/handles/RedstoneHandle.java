@@ -1,5 +1,6 @@
 package de.saschat.createcomputing.peripherals.handles;
 
+import com.simibubi.create.foundation.utility.RegisteredObjects;
 import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.LuaFunction;
@@ -71,7 +72,7 @@ public class RedstoneHandle {
     }
     @LuaFunction(mainThread = false)
     public final String[] getItems(IArguments arguments) throws LuaException {
-        return Arrays.stream(getHandle().items).map(a -> a.getRegistryName().toString()).collect(Collectors.toList()).toArray(new String[0]);
+        return Arrays.stream(getHandle().items).map(a -> RegisteredObjects.getKeyOrThrow(a.asItem())).collect(Collectors.toList()).toArray(new String[0]);
     }
     @LuaFunction
     public final void close() {

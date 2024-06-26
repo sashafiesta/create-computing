@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -29,7 +29,7 @@ public class ComputerizedDisplaySourceBlock extends Block implements EntityBlock
     public static DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public ComputerizedDisplaySourceBlock() {
-        super(BlockBehaviour.Properties.of(Material.WOOD).destroyTime(1));
+        super(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).destroyTime(1));
         registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH));
     }
 

@@ -13,20 +13,21 @@ import de.saschat.createcomputing.tiles.TrainNetworkObserverTile;
 import de.saschat.createcomputing.tiles.renderer.TrainNetworkObserverRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -37,8 +38,9 @@ import java.util.function.Supplier;
 public class Registries {
     public static DeferredRegister<Item> ITEM_REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, CreateComputingMod.MOD_ID);
     public static DeferredRegister<Block> BLOCK_REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, CreateComputingMod.MOD_ID);
-    public static DeferredRegister<BlockEntityType<?>> TILE_REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, CreateComputingMod.MOD_ID);
+    public static DeferredRegister<BlockEntityType<?>> TILE_REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, CreateComputingMod.MOD_ID);
 
+    private static final DeferredRegister<CreativeModeTab> TAB_REGISTERY =DeferredRegister.create(net.minecraft.core.registries.Registries.CREATIVE_MODE_TAB, CreateComputingMod.MOD_ID);
     public static RegistryObject<Block> registerBlock(String name, Supplier<Block> blockSupplier) {
         CreateComputingMod.LOGGER.info("Queuing block: " + name);
         return BLOCK_REGISTRY.register(name, blockSupplier);
@@ -65,13 +67,6 @@ public class Registries {
         });
     }
 
-    public static CreativeModeTab TAB = new CreativeModeTab("createcomputing.tab") {
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(COMPUTERIZED_DISPLAY_TARGET_ITEM.get());
-        }
-    };
-
     // Computerized Display Source
     public static RegistryObject<Block> COMPUTERIZED_DISPLAY_SOURCE = registerBlock(
         "computerized_display_source",
@@ -80,7 +75,7 @@ public class Registries {
     public static RegistryObject<Item> COMPUTERIZED_DISPLAY_SOURCE_ITEM = registerBlockItem(
         "computerized_display_source",
         COMPUTERIZED_DISPLAY_SOURCE,
-        new Item.Properties().tab(TAB)
+        new Item.Properties()
     );
     public static RegistryObject<BlockEntityType<ComputerizedDisplaySourceTile>> COMPUTERIZED_DISPLAY_SOURCE_TILE = registerTile(
         "computerized_display_source",
@@ -97,7 +92,7 @@ public class Registries {
     public static RegistryObject<Item> COMPUTERIZED_DISPLAY_TARGET_ITEM = registerBlockItem(
         "computerized_display_target",
         COMPUTERIZED_DISPLAY_TARGET,
-        new Item.Properties().tab(TAB)
+        new Item.Properties()
     );
     public static RegistryObject<BlockEntityType<ComputerizedDisplayTargetTile>> COMPUTERIZED_DISPLAY_TARGET_TILE = registerTile(
         "computerized_display_target",
@@ -113,7 +108,7 @@ public class Registries {
     public static RegistryObject<Item> COMPUTERIZED_REDSTONE_LINK_ITEM = registerBlockItem(
         "computerized_redstone_link",
         COMPUTERIZED_REDSTONE_LINK,
-        new Item.Properties().tab(TAB)
+        new Item.Properties()
     );
     public static RegistryObject<BlockEntityType<ComputerizedRedstoneLinkTile>> COMPUTERIZED_REDSTONE_LINK_TILE = registerTile(
         "computerized_redstone_link",
@@ -129,7 +124,7 @@ public class Registries {
     public static RegistryObject<Item> TRAIN_NETWORK_OBSERVER_ITEM = registerBlockItem(
         "train_network_observer",
         TRAIN_NETWORK_OBSERVER,
-        new Item.Properties().tab(TAB)
+        new Item.Properties()
 		,TrackTargetingBlockItem.ofType(TrainNetworkObserverTile.NETWORK_OBSERVER)
     );
     public static RegistryObject<BlockEntityType<TrainNetworkObserverTile>> TRAIN_NETWORK_OBSERVER_TILE = registerTile(
@@ -137,6 +132,20 @@ public class Registries {
         TrainNetworkObserverTile::new,
         TRAIN_NETWORK_OBSERVER
     );
+
+    public static final RegistryObject<CreativeModeTab> TAB = TAB_REGISTERY.register("base",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.createcomputing.tab"))
+                    .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                    .icon(() -> Registries.COMPUTERIZED_DISPLAY_TARGET_ITEM.get().getDefaultInstance())
+                    .displayItems((displayParams, output) ->
+                    {
+                        output.accept(Registries.COMPUTERIZED_DISPLAY_TARGET_ITEM.get());
+                        output.accept(Registries.COMPUTERIZED_DISPLAY_SOURCE_ITEM.get());
+                        output.accept(Registries.COMPUTERIZED_REDSTONE_LINK_ITEM.get());
+                        output.accept(Registries.TRAIN_NETWORK_OBSERVER_ITEM.get());
+                    })
+                    .build());
 
     // Events
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -160,6 +169,7 @@ public class Registries {
         }
         public static void modData(final GatherDataEvent event) {
         }
+
     }
 	
     // Real loading
@@ -168,6 +178,7 @@ public class Registries {
         BLOCK_REGISTRY.register(modEventBus);
         ITEM_REGISTRY.register(modEventBus);
         TILE_REGISTRY.register(modEventBus);
+        TAB_REGISTERY.register(modEventBus);
         CreateComputingMod.LOGGER.info("Registered all registries.");
     } // For loading.
 }

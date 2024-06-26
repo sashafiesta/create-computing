@@ -1,6 +1,7 @@
 package de.saschat.createcomputing;
 
 import com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours;
+import com.simibubi.create.foundation.utility.RegisteredObjects;
 import de.saschat.createcomputing.behaviour.source.TextDisplayBehaviour;
 import de.saschat.createcomputing.behaviour.target.TextPassBehaviour;
 import net.minecraft.resources.ResourceLocation;
@@ -13,7 +14,7 @@ public class Behaviours {
                     "computerized_display_source"),
                 new TextDisplayBehaviour()
             ),
-            Registries.COMPUTERIZED_DISPLAY_SOURCE_TILE.get().getRegistryName()
+            RegisteredObjects.getKeyOrThrow(Registries.COMPUTERIZED_DISPLAY_SOURCE_TILE.get())
         );
         AllDisplayBehaviours.assignBlock(
             AllDisplayBehaviours.register(
@@ -21,7 +22,7 @@ public class Behaviours {
                     "computerized_display_target"),
                 new TextPassBehaviour()
             ),
-            Registries.COMPUTERIZED_DISPLAY_TARGET_TILE.get().getRegistryName()
+            RegisteredObjects.getKeyOrThrow(Registries.COMPUTERIZED_DISPLAY_TARGET_TILE.get())
         );
     }
 }

@@ -133,7 +133,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
                 return MethodResult.of(null);
             Carriage.DimensionalCarriageEntity car = carr.get();
             CarriageContraptionEntity ent = car.entity.get();
-            return MethodResult.of(ent.getX(), ent.getY(), ent.getZ(), ent.getLevel().dimension().getRegistryName().toString());
+            return MethodResult.of(ent.getX(), ent.getY(), ent.getZ(), ent.level().dimension().registry().toString());
         });
         addMethod("getTrainSpeed", (iComputerAccess, iLuaContext, iArguments) -> {
             String b = iArguments.getString(0);
@@ -334,7 +334,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
         }
         ret.put("type", "item");
         ret.put("count", filter.getCount());
-        ret.put("id", filter.getItem().getRegistryName().toString());
+        ret.put("id", filter.getItem().getDescriptionId());
         ret.put("nbt", blowNBT(filter.getTag()));
         return ret;
     }

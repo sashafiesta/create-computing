@@ -1,5 +1,6 @@
 package de.saschat.createcomputing;
 
+import com.simibubi.create.foundation.utility.RegisteredObjects;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.*;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class Utils {
     public static Item getByName(ResourceLocation loc) {
         var itemRegistryObject = ForgeRegistries.ITEMS.getEntries().stream().filter(a -> {
-            return a.getValue().getRegistryName().equals(loc);
+            return RegisteredObjects.getKeyOrThrow(a.getValue()).equals(loc);
         }).findFirst().orElseGet(() -> null);
         if (itemRegistryObject == null)
             return Items.AIR;

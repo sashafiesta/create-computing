@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 
 public class TrainNetworkObserverBlock extends Block implements IBE<TrainNetworkObserverTile> {
     public TrainNetworkObserverBlock() {
-        super(Properties.of(Material.WOOD).destroyTime(1));
+        super(Properties.of().mapColor(MapColor.WOOD).destroyTime(1));
     }
 
     @Override

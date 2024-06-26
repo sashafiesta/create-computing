@@ -9,13 +9,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ComputerizedRedstoneLinkBlock extends Block implements IBE<ComputerizedRedstoneLinkTile> {
     public ComputerizedRedstoneLinkBlock() {
-        super(BlockBehaviour.Properties.of(Material.WOOD).destroyTime(1));
+        super(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).destroyTime(1));
     }
 
     @Override
