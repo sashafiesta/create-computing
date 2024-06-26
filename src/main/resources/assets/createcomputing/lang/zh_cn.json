@@ -1,0 +1,8 @@
+{
+  "itemGroup.createcomputing.tab": "Create: Computing",
+  "createcomputing.display_source.computerized_display_source": "来自计算机的文本",
+  "block.createcomputing.computerized_display_source": "计算机化显示源",
+  "block.createcomputing.computerized_display_target": "计算机化显示目标",
+  "block.createcomputing.computerized_redstone_link": "计算机化无线红石信号终端",
+  "block.createcomputing.train_network_observer": "列车网络侦测器"
+}
