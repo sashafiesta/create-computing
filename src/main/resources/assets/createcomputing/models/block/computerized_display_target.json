@@ -1,11 +1,11 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "create:block/filtered_detector_front",
 		"1": "create:block/brass_casing",
 		"3": "createcomputing:block/brass_casing_slab",
 		"4": "create:block/redstone_antenna",
-		"particle": "create:block/filtered_detector_front"
+		"5": "create:block/threshold_switch_front",
+		"particle": "create:block/threshold_switch_front"
 	},
 	"elements": [
 		{
@@ -52,12 +52,12 @@
 			"from": [2, 2, -2],
 			"to": [14, 14, 0],
 			"faces": {
-				"north": {"uv": [0, 0, 10, 10], "texture": "#0"},
-				"east": {"uv": [0, 0, 1, 10], "texture": "#0"},
-				"south": {"uv": [0, 0, 3, 3], "texture": "#0"},
-				"west": {"uv": [0, 0, 1, 10], "texture": "#0"},
-				"up": {"uv": [0, 0, 12, 1], "texture": "#0"},
-				"down": {"uv": [0, 0, 12, 1], "texture": "#0"}
+				"north": {"uv": [3, 3, 13, 13], "texture": "#5"},
+				"east": {"uv": [5, 3, 3, 13], "texture": "#5"},
+				"south": {"uv": [0, 0, 3, 3], "texture": "#missing"},
+				"west": {"uv": [13, 3, 11, 13], "texture": "#5"},
+				"up": {"uv": [13, 3, 3, 5], "texture": "#5"},
+				"down": {"uv": [13, 11, 3, 13], "texture": "#5"}
 			}
 		},
 		{
@@ -112,8 +112,6 @@
 			"name": "VoxelShapes",
 			"origin": [0, 0, 0],
 			"color": 0,
-			"nbt": "{}",
-			"armAnimationEnabled": false,
 			"children": [2, 3, 4]
 		}
 	]
