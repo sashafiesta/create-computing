@@ -75,8 +75,8 @@ public class ComputerizedRedstoneLinkTile extends SmartBlockEntity {
     }
 
     public void remove(LinkPair pair) {
-        if (PERIPHERAL.isPresent())
-            PERIPHERAL.resolve().get().killHandles(pair.index);
+        /*if (PERIPHERAL.isPresent())
+            PERIPHERAL.resolve().get().removeHandle(pair.index);*/
         pairs.remove(pair.index, pair);
         pair.sendSignal = 0;
         pair.transmit.notifySignalChange();

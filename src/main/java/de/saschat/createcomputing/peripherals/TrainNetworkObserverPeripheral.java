@@ -75,7 +75,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             String b = iArguments.getString(0);
             Optional<Train> first = getTrains().stream().filter(a -> a.id.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             Train train = first.get();
             return MethodResult.of(new Gson().fromJson(Component.Serializer.toJson(train.name), Map.class));
         });
@@ -83,11 +83,11 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             String b = iArguments.getString(0);
             Optional<Train> first = getTrains().stream().filter(a -> a.id.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             Train train = first.get();
             Map<Object, Object> map = new HashMap<>();
             if (train.runtime.getSchedule() == null)
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             int bidx = 1;
             for (ScheduleEntry entry : train.runtime.getSchedule().entries) {
                 Map<Object, Object> data = new HashMap<>();
@@ -118,7 +118,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             String b = iArguments.getString(0);
             Optional<Train> first = getTrains().stream().filter(a -> a.id.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             Train train = first.get();
 
             Optional<Carriage.DimensionalCarriageEntity> carr = Optional.empty();
@@ -130,7 +130,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
                 carr = Optional.of(a1);
 
             if (carr.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             Carriage.DimensionalCarriageEntity car = carr.get();
             CarriageContraptionEntity ent = car.entity.get();
             return MethodResult.of(ent.getX(), ent.getY(), ent.getZ(), ent.level().dimension().registry().toString());
@@ -139,7 +139,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             String b = iArguments.getString(0);
             Optional<Train> first = getTrains().stream().filter(a -> a.id.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             Train train = first.get();
             return MethodResult.of(train.speed);
         });
@@ -147,12 +147,12 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             String b = iArguments.getString(0);
             Optional<Train> first = getTrains().stream().filter(a -> a.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             Train train = first.get();
             GlobalStation currentStation = train.getCurrentStation();
             if (currentStation != null)
                 return MethodResult.of(currentStation.getId().toString(), currentStation.name);
-            return MethodResult.of(null);
+            return MethodResult.of((Object) null);
         });
         // STOPS
         addMethod("getStops", ((iComputerAccess, iLuaContext, iArguments) -> {
@@ -163,7 +163,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             String b = iArguments.getString(0);
             Optional<GlobalStation> first = getStations().stream().filter(a -> a.id.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             GlobalStation station = first.get();
             return MethodResult.of(station.name);
         });
@@ -171,7 +171,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             String b = iArguments.getString(0);
             Optional<GlobalStation> first = getStations().stream().filter(a -> a.id.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             GlobalStation station = first.get();
             BlockPos pos = station.getBlockEntityPos();
             return MethodResult.of(pos.getX(), pos.getY(), pos.getZ());
@@ -180,7 +180,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             String b = iArguments.getString(0);
             Optional<GlobalStation> first = getStations().stream().filter(a -> a.id.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             GlobalStation station = first.get();
             List<GlobalTrainDisplayData.TrainDeparturePrediction> prepare = GlobalTrainDisplayData.prepare(station.name, 200);
             Map<Integer, Map<String, Object>> data = new HashMap();
@@ -205,7 +205,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             String b = iArguments.getString(0);
             Optional<SignalBoundary> first = getSignals().stream().filter(a -> a.id.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             SignalBoundary signal = first.get();
             Map<Integer, Map<Integer, Integer>> returned = new HashMap<>();
             int idx = 1;
@@ -233,7 +233,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             boolean toPos = iArguments.getBoolean(1);
             Optional<SignalBoundary> first = getSignals().stream().filter(a -> a.id.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             SignalBoundary signal = first.get();
             SignalBlockEntity.SignalState stateFor = signal.cachedStates.get(toPos);
             return switch (stateFor) {
@@ -252,7 +252,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             String b = iArguments.getString(0);
             Optional<TrackObserver> first = getObservers().stream().filter(a -> a.id.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             TrackObserver obs = first.get();
             BlockPos pos = obs.getBlockEntityPos();
             return MethodResult.of(pos.getX(), pos.getY(), pos.getZ());
@@ -261,7 +261,7 @@ public class TrainNetworkObserverPeripheral extends SmartPeripheral {
             String b = iArguments.getString(0);
             Optional<TrackObserver> first = getObservers().stream().filter(a -> a.id.toString().equals(b)).findFirst();
             if (first.isEmpty())
-                return MethodResult.of(null);
+                return MethodResult.of((Object) null);
             TrackObserver obs = first.get();
             return MethodResult.of(blowFilter(obs.getFilter().item()));
         }));

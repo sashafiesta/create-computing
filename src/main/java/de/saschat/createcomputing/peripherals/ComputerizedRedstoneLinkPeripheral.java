@@ -23,20 +23,13 @@ public class ComputerizedRedstoneLinkPeripheral extends SmartPeripheral {
     public HashMap<UUID, RedstoneHandle> handles = new HashMap<>();
 
     public void removeHandle(UUID hd) {
-        handles.values().forEach(a -> {
-            if (a.handle.equals(hd)) {
-                a.close();
-                handles.remove(hd, a);
-            }
-        });
-    }
-
-    public void killHandles(UUID hd) {
-        handles.values().forEach(a -> {
-            if (a.handle.equals(hd)) {
-                a.close();
-                handles.remove(a.handle, a);
-            }
+        parent.tasks.add(() -> {
+            handles.entrySet().removeIf(entry -> entry.getKey().equals(hd));
+            parent.pairs.forEach((b,a) -> {
+                if (b.equals(hd)) {
+                    parent.remove(a);
+                }
+            });
         });
     }
 
